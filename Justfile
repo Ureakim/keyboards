@@ -8,7 +8,7 @@ image:
 	{{CONTAINER_IMAGE}} rmi {{CONTAINER_IMAGE}}
 	{{CONTAINER_RUNTIME}} build -t {{CONTAINER_IMAGE}} .
 
-run:
+run: mkdir_build
 	{{CONTAINER_CMD}}
 
 kyria: mkdir_build
