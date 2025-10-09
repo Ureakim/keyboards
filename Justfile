@@ -6,16 +6,13 @@ CONTAINER_VOLUME := " -v ./build:/qmk_firmware/.build \
 	-v ./users/halcyon/users/halcyon_modules:/qmk_firmware/users/halcyon_modules "
 CONTAINER_CMD := CONTAINER_RUNTIME + " run --rm -it " + CONTAINER_VOLUME + CONTAINER_IMAGE
 
-prepare: image init_submodules
+prepare: image submodules
 
-init_submodules:
-	git submodule update --init --recursive
-
-update_submodules:
-	git submodule update --recursive --remote
+submodules:
+	git submodule update --init --recursive --remote
 
 image:
-	{{CONTAINER_IMAGE}} rmi {{CONTAINER_IMAGE}}
+	{{CONTAINER_RUNTIME}} rmi {{CONTAINER_IMAGE}}
 	{{CONTAINER_RUNTIME}} build -t {{CONTAINER_IMAGE}} .
 
 run: mkdir_build
