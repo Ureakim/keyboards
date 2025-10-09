@@ -1,0 +1,3 @@
+[submodule "users/halcyon"]
+	path = users/halcyon
+	url = https://github.com/splitkb/qmk_userspace.git
