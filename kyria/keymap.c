@@ -90,20 +90,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * .-------------------------------------------.                              .-------------------------------------------.
  * |   F1   |  F2  |  F3  |  F4  |  F5  |  F6  |                              |  F7  |  F8  |  F9  |  F10 |  F11 |  F12   |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |  xxxx  | xxxx | xxxx | xxxx | xxxx | xxxx |                              |HSV H↓|HSV H↑|HSV S↓|HSV S↑|HSV V↓| HSV V↑ |
+ * | CLR EE | xxxx |Reboot|DBGTOG| xxxx | xxxx |                              | xxxx | xxxx |HSV H↓|HSV H↑|HSV S↓| HSV S↑ |
  * |--------+------+------+------+------+------+-------------.  .-------------+------+------+------+------+------+--------|
  * | Pause  |PrScrn|ScrLck|Insert|NumLck|LEDTOG| xxxx | xxxx |  | xxxx | xxxx | LED ←| LED →|LED B↓|LED B↑|LED S↓| LED S↑ |
  * .----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------.
- *                        |Reboot| xxxx |DBGTOG| xxxx |CLR EE|  | xxxx | xxxx | xxxx | xxxx |      |
+ *                        |      |      |      |      |      |  | xxxx | xxxx | xxxx | xxxx |      |
  *                        .----------------------------------.  .----------------------------------.
  */
     [_CTRL] = LAYOUT_split_3x6_5_hlc(
        KC_F1 ,   KC_F2  ,   KC_F3  ,   KC_F4  ,   KC_F5    ,   KC_F6  ,                                                 KC_F7  ,     KC_F8   ,   KC_F9  ,  KC_F10  ,     KC_F11  ,    KC_F12   ,
-     XXXXXXX , XXXXXXX ,   XXXXXXX ,  XXXXXXX ,   XXXXXXX  ,  XXXXXXX ,                                               RM_HUED  ,    RM_HUEU  , RM_SATD  , RM_SATU  ,     XXXXXXX ,    XXXXXXX  ,
+      EE_CLR , XXXXXXX ,   QK_RBT  ,  DB_TOGG ,   XXXXXXX  ,  XXXXXXX ,                                                XXXXXXX ,     XXXXXXX ,  RM_HUED ,  RM_HUEU ,     RM_SATD ,    RM_SATU  ,
      KC_PAUSE, KC_PSCR ,   KC_SCRL ,   KC_INS , KC_NUM_LOCK,  RM_TOGG ,XXXXXXX ,XXXXXXX ,     XXXXXXX , XXXXXXX  ,     RM_PREV ,     RM_NEXT ,  RM_VALD ,  RM_VALU ,     RM_SPDD ,    RM_SPDU  ,
-                                       QK_RBT ,  XXXXXXX   ,  DB_TOGG ,XXXXXXX ,EE_CLR  ,     XXXXXXX , XXXXXXX  ,   XXXXXXX   ,   XXXXXXX   , _______,
+                                      _______ ,  _______   ,  _______ ,_______ ,_______ ,     XXXXXXX , XXXXXXX  ,   XXXXXXX   ,   XXXXXXX   , _______,
 
-	 XXXXXXX , XXXXXXX,     XXXXXXX,   XXXXXXX,     XXXXXXX,                                                                          XXXXXXX,  XXXXXXX ,  XXXXXXX ,     XXXXXXX , XXXXXXX
+     XXXXXXX , XXXXXXX,     XXXXXXX,   XXXXXXX,     XXXXXXX,                                                                          XXXXXXX,  XXXXXXX ,  XXXXXXX ,     XXXXXXX , XXXXXXX
     ),
 
 };
@@ -120,6 +120,7 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 
 void keyboard_post_init_user(void) {
     #if defined(RGB_MATRIX_CUSTOM_USER)
+    // Start with a defined RGB matrix effect
     rgb_matrix_mode(RGB_MATRIX_CUSTOM_LAYER_INDICATOR);
     #endif
 }
