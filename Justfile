@@ -18,7 +18,7 @@ image:
 run: mkdir_build
 	{{CONTAINER_CMD}}
 
-kyria: mkdir_build
+kyria: clean mkdir_build
 	{{CONTAINER_CMD}} qmk compile -kb splitkb/halcyon/kyria/rev4 -km ureakim -e HLC_ENCODER=1 -e TARGET=kyria_left
 	{{CONTAINER_CMD}} qmk compile -kb splitkb/halcyon/kyria/rev4 -km ureakim -e HLC_CIRQUE_TRACKPAD=1 -e TARGET=kyria_right
 
