@@ -6,6 +6,7 @@
 //
 // Pointing devive
 //
+#define MK_3_SPEED            // Use constant speed mode for mouse keys
 #define SPLIT_POINTING_ENABLE // Transmit pointing info if pointing device is in the slave side
 #define POINTING_DEVICE_RIGHT // Pointing device on the right side
 
