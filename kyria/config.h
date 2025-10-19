@@ -3,6 +3,9 @@
 //
 #define LAYER_STATE_8BIT // Limit the number of layers to 8
 
+// Configuration
+#define TAPPING_TOGGLE 2 // tap 2 times to toggle layer with the TT keycode
+
 //
 // Pointing devive
 //

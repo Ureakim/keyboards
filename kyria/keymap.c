@@ -5,16 +5,11 @@
 
 enum layers {
 	_BASE = 0,
-	_NUMOVE,
+	_NUM,
 	_SYM,
-	_CTRL,
+	_CTL,
 };
 
-
-// Aliases for readability
-#define LA_NUM     MO(_NUMOVE)
-#define LA_SYM     MO(_SYM)
-#define LA_CTRL    MO(_CTRL)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -26,16 +21,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |  Esc   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ´ "   |
  * |--------+------+------+------+------+------+-------------.  .-------------+------+------+------+------+------+--------|
- * |   ~    |   Z  |   X  |   C  |   V  |   B  |BackSp| LGUI |  | Ctrl |  Del |   N  |   M  | ,  < | . >  | /  ? |  ` ~   |
+ * |   ~    |   Z  |   X  |   C  |   V  |   B  |BackSp| LGUI |  |  Ctl |  Del |   N  |   M  | ,  < | . >  | /  ? |  ` ~   |
  * .----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------.
- *                        |Numove|L Alt |L Sft |Space |L Ctrl|  |R Ctrl| Enter| R Sft| R Alt| Sym |
+ *                        |  Num |L Alt |L Sft |Space |L Ctrl|  |R Ctrl| Enter| R Sft| R Alt| Sym |
  *                        .----------------------------------.  .----------------------------------.
  */
     [_BASE] = LAYOUT_split_3x6_5_hlc(
      KC_TAB  , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   ,                                            KC_Y ,   KC_U ,   KC_I ,   KC_O ,   KC_P , KC_BSLS,
      KC_ESC  , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   ,                                            KC_H ,   KC_J ,   KC_K ,   KC_L ,KC_SCLN , KC_QUOT,
- LSFT(KC_GRV), KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_BSPC, KC_LGUI,     LA_CTRL , KC_DEL ,   KC_N ,   KC_M , KC_COMM, KC_DOT ,KC_SLSH , KC_GRV ,
-                                 LA_NUM , KC_LALT, KC_LSFT, KC_SPC , KC_LCTL,     KC_RCTL ,KC_ENTER, KC_RSFT, KC_RALT, LA_SYM ,
+ LSFT(KC_GRV), KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_BSPC, KC_LGUI,     MO(_CTL) , KC_DEL ,   KC_N ,   KC_M , KC_COMM, KC_DOT ,KC_SLSH , KC_GRV ,
+                                TT(_NUM), KC_LALT, KC_LSFT, KC_SPC , KC_LCTL,     KC_RCTL ,KC_ENTER, KC_RSFT, KC_RALT,MO(_SYM),
 
      XXXXXXX , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
@@ -53,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |Clic 3|      |Clic 1|Clic 2|Clic 3|
  *                        .----------------------------------.  .----------------------------------.
  */
-    [_NUMOVE] = LAYOUT_split_3x6_5_hlc(
+    [_NUM] = LAYOUT_split_3x6_5_hlc(
      _______ ,XXXXXXX , KC_7   , KC_8   , KC_9   , XXXXXXX,                                         KC_HOME , KC_PGDN, KC_PGUP, KC_END ,XXXXXXX ,XXXXXXX ,
      _______ ,XXXXXXX , KC_4   , KC_5   , KC_6   , XXXXXXX,                                         KC_LEFT , KC_DOWN,  KC_UP ,KC_RIGHT, MS_WHLU,XXXXXXX ,
      XXXXXXX , KC_0   , KC_1   , KC_2   , KC_3   , XXXXXXX, _______, _______,     MS_BTN1 ,MS_BTN2 ,MS_LEFT , MS_DOWN,  MS_UP , MS_RGHT, MS_WHLD,XXXXXXX ,
@@ -97,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  | xxxx | xxxx | xxxx | xxxx |      |
  *                        .----------------------------------.  .----------------------------------.
  */
-    [_CTRL] = LAYOUT_split_3x6_5_hlc(
+    [_CTL] = LAYOUT_split_3x6_5_hlc(
        KC_F1 ,   KC_F2  ,   KC_F3  ,   KC_F4  ,   KC_F5    ,   KC_F6  ,                                                 KC_F7  ,     KC_F8   ,   KC_F9  ,  KC_F10  ,     KC_F11  ,    KC_F12   ,
       EE_CLR , XXXXXXX ,   QK_RBT  ,  DB_TOGG ,   XXXXXXX  ,  XXXXXXX ,                                                XXXXXXX ,     XXXXXXX ,  RM_HUED ,  RM_HUEU ,     RM_SATD ,    RM_SATU  ,
      KC_PAUSE, KC_PSCR ,   KC_SCRL ,   KC_INS , KC_NUM_LOCK,  RM_TOGG ,XXXXXXX ,XXXXXXX ,     XXXXXXX , XXXXXXX  ,     RM_PREV ,     RM_NEXT ,  RM_VALD ,  RM_VALU ,     RM_SPDD ,    RM_SPDU  ,
@@ -111,10 +106,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Encoders
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-    [_BASE] = { ENCODER_CCW_CW(KC_AUDIO_VOL_UP, KC_AUDIO_VOL_DOWN),  ENCODER_CCW_CW(QK_MOUSE_WHEEL_UP, QK_MOUSE_WHEEL_DOWN)  },
-    [_NUMOVE] = { ENCODER_CCW_CW(KC_AUDIO_VOL_UP, KC_AUDIO_VOL_DOWN),  ENCODER_CCW_CW(QK_MOUSE_WHEEL_UP, QK_MOUSE_WHEEL_DOWN)  },
-    [_SYM] = { ENCODER_CCW_CW(KC_AUDIO_VOL_UP, KC_AUDIO_VOL_DOWN),  ENCODER_CCW_CW(QK_MOUSE_WHEEL_UP, QK_MOUSE_WHEEL_DOWN)  },
-    [_CTRL] = { ENCODER_CCW_CW(QK_LED_MATRIX_BRIGHTNESS_UP, QK_LED_MATRIX_BRIGHTNESS_DOWN),  ENCODER_CCW_CW(QK_LED_MATRIX_SPEED_UP, QK_LED_MATRIX_SPEED_DOWN)  },
+    [_BASE] = { ENCODER_CCW_CW(QK_MOUSE_WHEEL_UP, QK_MOUSE_WHEEL_DOWN), ENCODER_CCW_CW(KC_AUDIO_VOL_UP, KC_AUDIO_VOL_DOWN) },
+    [_NUM] =  { ENCODER_CCW_CW(QK_MOUSE_WHEEL_UP, QK_MOUSE_WHEEL_DOWN), ENCODER_CCW_CW(KC_AUDIO_VOL_UP, KC_AUDIO_VOL_DOWN) },
+    [_SYM] =  { ENCODER_CCW_CW(QK_MOUSE_WHEEL_UP, QK_MOUSE_WHEEL_DOWN), ENCODER_CCW_CW(KC_AUDIO_VOL_UP, KC_AUDIO_VOL_DOWN) },
+    [_CTL] = { ENCODER_CCW_CW(QK_LED_MATRIX_BRIGHTNESS_UP, QK_LED_MATRIX_BRIGHTNESS_DOWN),  ENCODER_CCW_CW(QK_LED_MATRIX_SPEED_UP, QK_LED_MATRIX_SPEED_DOWN)  },
 };
 #endif
 
