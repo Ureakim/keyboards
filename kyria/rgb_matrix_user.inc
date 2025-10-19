@@ -5,21 +5,13 @@ RGB_MATRIX_EFFECT(LAYER_INDICATOR)
 static bool LAYER_INDICATOR(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
     uint8_t layer = get_highest_layer(layer_state|default_layer_state);
+    const uint8_t layer_hues[] = { 85, 132, 191, 0, 21 };
 
     hsv_t hsv = rgb_matrix_config.hsv;
-    switch(layer) {
-        case 1:
-            hsv.h = 132;
-            break;
-        case 2:
-            hsv.h = 36;
-            break;
-        case 3:
-            hsv.h = 0;
-            break;
-        default:
-            hsv.h = 106;
-            break;
+    if (layer < sizeof(layer_hues) / sizeof(layer_hues[0])) {
+        hsv.h = layer_hues[layer];
+    } else {
+        hsv.h = 106; // Default hue if the layer is out of bounds
     }
     rgb_t rgb = hsv_to_rgb(hsv);
 

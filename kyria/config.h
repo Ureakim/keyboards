@@ -12,6 +12,9 @@
 #define MK_3_SPEED            // Use constant speed mode for mouse keys
 #define SPLIT_POINTING_ENABLE // Transmit pointing info if pointing device is in the slave side
 #define POINTING_DEVICE_RIGHT // Pointing device on the right side
+#define POINTING_DEVICE_AUTO_MOUSE_ENABLE // Autoswitch to a layer when using pointing device
+#define AUTO_MOUSE_TIME 250 // Time layer remains active
+#undef POINTING_DEVICE_GESTURES_CURSOR_GLIDE_ENABLE // Inertial cursor
 
 //
 // RGB matrix

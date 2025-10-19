@@ -8,8 +8,16 @@ enum layers {
 	_NUM,
 	_SYM,
 	_CTL,
+	_PTG,
 };
 
+enum custom_keycodes {
+    CPI_LOW = SAFE_RANGE,
+};
+
+// Global variable
+#define CURSOR_CPI_BASE 800
+#define CURSOR_CPI_LOW  400
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -43,16 +51,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        | xxxx |   4  |   5  |   6  | xxxx |                              |   ←  |   ↓  |   ↑  |   →  |Scrl ↑|  xxxx  |
  * |--------+------+------+------+------+------+-------------.  .-------------+------+------+------+------+------+--------|
- * |  xxxx  |   0  |   1  |   2  |   3  | xxxx |      |      |  |Clic 1|Clic 2|Mouse←|Mouse↓|Mouse↑|Mouse→|Scrl ↓|  xxxx  |
+ * |  PTG  |   0  |   1  |   2  |   3  | xxxx |      |      |  |      |      |Mouse←|Mouse↓|Mouse↑|Mouse→|Scrl ↓|  xxxx  |
  * .----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------.
- *                        |      |      |      |      |      |  |Clic 3|      |Clic 1|Clic 2|Clic 3|
+ *                        |      |      |      |      |      |  |      |      |Clic 1|Clic 2|Clic 3|
  *                        .----------------------------------.  .----------------------------------.
  */
     [_NUM] = LAYOUT_split_3x6_5_hlc(
      _______ ,XXXXXXX , KC_7   , KC_8   , KC_9   , XXXXXXX,                                         KC_HOME , KC_PGDN, KC_PGUP, KC_END ,XXXXXXX ,XXXXXXX ,
      _______ ,XXXXXXX , KC_4   , KC_5   , KC_6   , XXXXXXX,                                         KC_LEFT , KC_DOWN,  KC_UP ,KC_RIGHT, MS_WHLU,XXXXXXX ,
-     XXXXXXX , KC_0   , KC_1   , KC_2   , KC_3   , XXXXXXX, _______, _______,     MS_BTN1 ,MS_BTN2 ,MS_LEFT , MS_DOWN,  MS_UP , MS_RGHT, MS_WHLD,XXXXXXX ,
-                                 _______, _______, _______, _______, _______,     MS_BTN3 ,_______ ,MS_BTN1 , MS_BTN2, MS_BTN3,
+     TG(_PTG), KC_0   , KC_1   , KC_2   , KC_3   , XXXXXXX, _______, _______,     _______ ,_______ ,MS_LEFT , MS_DOWN,  MS_UP , MS_RGHT, MS_WHLD,XXXXXXX ,
+                                 _______, _______, _______, _______, _______,     _______ ,_______ ,MS_BTN1 , MS_BTN2, MS_BTN3,
 
      XXXXXXX , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
@@ -101,21 +109,88 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      XXXXXXX , XXXXXXX,     XXXXXXX,   XXXXXXX,     XXXXXXX,                                                                          XXXXXXX,  XXXXXXX ,  XXXXXXX ,     XXXXXXX , XXXXXXX
     ),
 
+/*
+ * Pointing Layer
+ *
+ * .-------------------------------------------.                              .-------------------------------------------.
+ * |  xxxx  | xxxx | xxxx | xxxx | xxxx | xxxx |                              | xxxx | xxxx | xxxx | xxxx | xxxx |  xxxx  |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |  xxxx  | xxxx |Clic 2|Clic 3|Clic 1| xxxx |                              | xxxx | xxxx | xxxx | xxxx | xxxx |  xxxx  |
+ * |--------+------+------+------+------+------+-------------.  .-------------+------+------+------+------+------+--------|
+ * |   PTG  | xxxx | xxxx | xxxx | xxxx | xxxx | xxxx | xxxx |  |Clic 1|Clic 2| xxxx | xxxx | xxxx | xxxx | xxxx |  xxxx  |
+ * .----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------.
+ *                        | xxxx | xxxx | xxxx | xxxx | xxxx |  |Clic 3| xxxx | xxxx | xxxx | xxxx |
+ *                        .----------------------------------.  .----------------------------------.
+ */
+    [_PTG] = LAYOUT_split_3x6_5_hlc(
+     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+     XXXXXXX, XXXXXXX, MS_BTN2, MS_BTN3, MS_BTN1, XXXXXXX,                                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+    TG(_PTG), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      MS_BTN1 ,MS_BTN2 ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+                                XXXXXXX, XXXXXXX, XXXXXXX, CPI_LOW, XXXXXXX,      MS_BTN3 ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+
+     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                            XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX
+    ),
+
 };
+
+/*
+ * New Layer
+ *
+ * .-------------------------------------------.                              .-------------------------------------------.
+ * |  xxxx  | xxxx | xxxx | xxxx | xxxx | xxxx |                              | xxxx | xxxx | xxxx | xxxx | xxxx |  xxxx  |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |  xxxx  | xxxx | xxxx | xxxx | xxxx | xxxx |                              | xxxx | xxxx | xxxx | xxxx | xxxx |  xxxx  |
+ * |--------+------+------+------+------+------+-------------.  .-------------+------+------+------+------+------+--------|
+ * |  xxxx  | xxxx | xxxx | xxxx | xxxx | xxxx | xxxx | xxxx |  | xxxx | xxxx | xxxx | xxxx | xxxx | xxxx | xxxx |  xxxx  |
+ * .----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------.
+ *                        | xxxx | xxxx | xxxx | xxxx | xxxx |  | xxxx | xxxx | xxxx | xxxx | xxxx |
+ *                        .----------------------------------.  .----------------------------------.
+    [_PTG] = LAYOUT_split_3x6_5_hlc(
+     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+                                XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+
+     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                            XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX
+    ),
+
+};
+*/
 
 // Encoders
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-    [_BASE] = { ENCODER_CCW_CW(QK_MOUSE_WHEEL_UP, QK_MOUSE_WHEEL_DOWN), ENCODER_CCW_CW(KC_AUDIO_VOL_UP, KC_AUDIO_VOL_DOWN) },
-    [_NUM] =  { ENCODER_CCW_CW(QK_MOUSE_WHEEL_UP, QK_MOUSE_WHEEL_DOWN), ENCODER_CCW_CW(KC_AUDIO_VOL_UP, KC_AUDIO_VOL_DOWN) },
-    [_SYM] =  { ENCODER_CCW_CW(QK_MOUSE_WHEEL_UP, QK_MOUSE_WHEEL_DOWN), ENCODER_CCW_CW(KC_AUDIO_VOL_UP, KC_AUDIO_VOL_DOWN) },
-    [_CTL] = { ENCODER_CCW_CW(QK_LED_MATRIX_BRIGHTNESS_UP, QK_LED_MATRIX_BRIGHTNESS_DOWN),  ENCODER_CCW_CW(QK_LED_MATRIX_SPEED_UP, QK_LED_MATRIX_SPEED_DOWN)  },
+    [_BASE] = { ENCODER_CCW_CW(QK_MOUSE_WHEEL_DOWN, QK_MOUSE_WHEEL_UP), ENCODER_CCW_CW(KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP) },
+    [_NUM] =  { ENCODER_CCW_CW(QK_MOUSE_WHEEL_DOWN, QK_MOUSE_WHEEL_UP), ENCODER_CCW_CW(KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP) },
+    [_SYM] =  { ENCODER_CCW_CW(QK_MOUSE_WHEEL_DOWN, QK_MOUSE_WHEEL_UP), ENCODER_CCW_CW(KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP) },
+    [_CTL] = { ENCODER_CCW_CW(QK_LED_MATRIX_BRIGHTNESS_DOWN, QK_LED_MATRIX_BRIGHTNESS_UP),  ENCODER_CCW_CW(QK_LED_MATRIX_SPEED_DOWN, QK_LED_MATRIX_SPEED_UP)  },
+    [_PTG] = { ENCODER_CCW_CW(QK_MOUSE_WHEEL_DOWN, QK_MOUSE_WHEEL_UP), ENCODER_CCW_CW(KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP) },
 };
 #endif
 
 void keyboard_post_init_user(void) {
-    #if defined(RGB_MATRIX_CUSTOM_USER)
+}
+
+void matrix_init_user(void) {
     // Start with a defined RGB matrix effect
     rgb_matrix_mode(RGB_MATRIX_CUSTOM_LAYER_INDICATOR);
-    #endif
+}
+
+void pointing_device_init_user(void) {
+    pointing_device_set_cpi(CURSOR_CPI_BASE);
+    set_auto_mouse_layer(_PTG);
+    set_auto_mouse_enable(true);
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case CPI_LOW:
+            if (record->event.pressed) {
+                pointing_device_set_cpi(CURSOR_CPI_LOW);
+            } else {
+                pointing_device_set_cpi(CURSOR_CPI_BASE);
+            }
+            return false;
+    }
+    return true;
 }
