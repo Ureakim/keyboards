@@ -13,7 +13,7 @@ enum custom_keycodes {
 };
 
 // Global variable
-#define CURSOR_CPI_BASE 800
+#define CURSOR_CPI_BASE 400
 #define CURSOR_CPI_LOW  200
 
 // clang-format off
@@ -26,18 +26,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |  Esc   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ´ "   |
  * |--------+------+------+------+------+------+-------------.  .-------------+------+------+------+------+------+--------|
- * |   ~    |   Z  |   X  |   C  |   V  |   B  |BackSp| LGUI |  |  Ctl |  Del |   N  |   M  | ,  < | . >  | /  ? |  ` ~   |
+ * |   ~    |   Z  |   X  |   C  |   V  |   B  |Space | LGUI |  | Ctrl | Enter|   N  |   M  | ,  < | . >  | /  ? |  ` ~   |
  * .----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------.
- *                        |  Num |L Alt |L Sft |Space |L Ctrl|  |R Ctrl| Enter| R Sft| R Alt| Sym |
+ *                        |  Num |L Alt |L Sft |BackSp|L Ctl |  | R Ctl|  Del | R Sft| R Alt| Sym |
  *                        .----------------------------------.  .----------------------------------.
  */
-    [_BASE] = LAYOUT_split_3x6_5_hlc(
+    [_BASE] = LAYOUT_split_3x6_5(
      KC_TAB  , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   ,                                            KC_Y ,   KC_U ,   KC_I ,   KC_O ,   KC_P , KC_BSLS,
      KC_ESC  , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   ,                                            KC_H ,   KC_J ,   KC_K ,   KC_L ,KC_SCLN , KC_QUOT,
- LSFT(KC_GRV), KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_BSPC, KC_LGUI,     MO(_CTL) , KC_DEL ,   KC_N ,   KC_M , KC_COMM, KC_DOT ,KC_SLSH , KC_GRV ,
-                                TT(_NUM), KC_LALT, KC_LSFT, KC_SPC , KC_LCTL,     KC_RCTL ,KC_ENTER, KC_RSFT, KC_RALT,MO(_SYM),
-
-     XXXXXXX , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+ LSFT(KC_GRV), KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_SPC , KC_LGUI,     MO(_CTL),KC_ENTER ,  KC_N ,   KC_M , KC_COMM, KC_DOT ,KC_SLSH , KC_GRV ,
+                                TT(_NUM), KC_LALT, KC_LSFT, KC_BSPC, KC_LCTL,     KC_RCTL ,KC_DEL   ,KC_RSFT, KC_RALT,MO(_SYM)
     ),
 
 /*
@@ -53,13 +51,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |      |      |Clic 1|Clic 2|Clic 3|
  *                        .----------------------------------.  .----------------------------------.
  */
-    [_NUM] = LAYOUT_split_3x6_5_hlc(
+    [_NUM] = LAYOUT_split_3x6_5(
      _______ ,XXXXXXX , KC_7   , KC_8   , KC_9   , XXXXXXX,                                         KC_HOME , KC_PGDN, KC_PGUP, KC_END ,XXXXXXX ,XXXXXXX ,
      _______ ,XXXXXXX , KC_4   , KC_5   , KC_6   , XXXXXXX,                                         KC_LEFT , KC_DOWN,  KC_UP ,KC_RIGHT, MS_WHLU,XXXXXXX ,
      TG(_PTG), KC_0   , KC_1   , KC_2   , KC_3   , XXXXXXX, _______, _______,     _______ ,_______ ,MS_LEFT , MS_DOWN,  MS_UP , MS_RGHT, MS_WHLD,XXXXXXX ,
-                                 _______, _______, _______, _______, _______,     _______ ,_______ ,MS_BTN1 , MS_BTN2, MS_BTN3,
-
-     XXXXXXX , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+                                 _______, _______, _______, _______, _______,     _______ ,_______ ,MS_BTN1 , MS_BTN2, MS_BTN3
     ),
 
 /*
@@ -70,18 +66,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |   !  |   @  |   #  |   $  |   %  |                              |   ^  |   &  |   *  |   (  |   )  |    _   |
  * |--------+------+------+------+------+------+-------------.  .-------------+------+------+------+------+------+--------|
- * |    ~   |   /  |   *  |   -  |   +  |   =  |      | xxxx |  |      |      |   <  |   {  |   [  |   ]  |   }  |    >   |
+ * |    ~   |   /  |   *  |   -  |   +  |   =  |      |      |  |      |      |   <  |   {  |   [  |   ]  |   }  |    >   |
  * .----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------.
- *                        |      |      |      |      |      |  |      |      |      |      | xxxx |
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        .----------------------------------.  .----------------------------------.
  */
-    [_SYM] = LAYOUT_split_3x6_5_hlc(
+    [_SYM] = LAYOUT_split_3x6_5(
      _______ ,   KC_1   ,   KC_2   ,   KC_3   ,   KC_4     ,   KC_5   ,                                                 KC_6   ,     KC_7    ,   KC_8   ,   KC_9   ,     KC_0    ,    KC_GRV   ,
      _______ ,LSFT(KC_1),LSFT(KC_2),LSFT(KC_3),LSFT(KC_4)  ,LSFT(KC_5),                                             LSFT(KC_6) ,  LSFT(KC_7) ,LSFT(KC_8),LSFT(KC_9),  LSFT(KC_0) ,LSFT(KC_MINS),
- LSFT(KC_GRV), KC_SLSH  ,LSFT(KC_8),  KC_MINS ,LSFT(KC_EQL),  KC_EQL  ,_______ ,XXXXXXX ,     _______ , _______  ,LSFT(KC_COMM),LSFT(KC_LBRC),  KC_LBRC ,  KC_RBRC ,LSFT(KC_RBRC), LSFT(KC_DOT),
-                                      _______ ,  _______   ,  _______ ,_______ ,_______ ,     _______ , _______  ,   _______   ,   _______   , _______,
-
-     XXXXXXX ,  XXXXXXX ,  XXXXXXX ,  XXXXXXX ,    XXXXXXX ,                                                                       XXXXXXX   ,  XXXXXXX ,  XXXXXXX , XXXXXXX  , XXXXXXX
+ LSFT(KC_GRV), KC_SLSH  ,LSFT(KC_8),  KC_MINS ,LSFT(KC_EQL),  KC_EQL  ,_______ ,_______ ,     _______ , _______  ,LSFT(KC_COMM),LSFT(KC_LBRC),  KC_LBRC ,  KC_RBRC ,LSFT(KC_RBRC), LSFT(KC_DOT),
+                                      _______ ,  _______   ,  _______ ,_______ ,_______ ,     _______ , _______  ,   _______   ,   _______   , _______
     ),
 
 /*
@@ -92,18 +86,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * | CLR EE | xxxx |Reboot|DBGTOG| xxxx | xxxx |                              | xxxx | xxxx |HSV H↓|HSV H↑|HSV S↓| HSV S↑ |
  * |--------+------+------+------+------+------+-------------.  .-------------+------+------+------+------+------+--------|
- * | Pause  |PrScrn|ScrLck|Insert|NumLck|LEDTOG| xxxx | xxxx |  | xxxx | xxxx | LED ←| LED →|LED B↓|LED B↑|LED S↓| LED S↑ |
+ * | Pause  |PrScrn|ScrLck|Insert|NumLck|LEDTOG| xxxx | xxxx |  |      | xxxx | LED ←| LED →|LED B↓|LED B↑|LED S↓| LED S↑ |
  * .----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------.
- *                        |      |      |      |      |      |  | xxxx | xxxx | xxxx | xxxx |      |
+ *                        |      |      |      |      |      |  | xxxx | xxxx | xxxx | xxxx | xxxx |
  *                        .----------------------------------.  .----------------------------------.
  */
-    [_CTL] = LAYOUT_split_3x6_5_hlc(
+    [_CTL] = LAYOUT_split_3x6_5(
        KC_F1 ,   KC_F2  ,   KC_F3  ,   KC_F4  ,   KC_F5    ,   KC_F6  ,                                                 KC_F7  ,     KC_F8   ,   KC_F9  ,  KC_F10  ,     KC_F11  ,    KC_F12   ,
       EE_CLR , XXXXXXX ,   QK_RBT  ,  DB_TOGG ,   XXXXXXX  ,  XXXXXXX ,                                                XXXXXXX ,     XXXXXXX ,  RM_HUED ,  RM_HUEU ,     RM_SATD ,    RM_SATU  ,
-     KC_PAUSE, KC_PSCR ,   KC_SCRL ,   KC_INS , KC_NUM_LOCK,  RM_TOGG ,XXXXXXX ,XXXXXXX ,     XXXXXXX , XXXXXXX  ,     RM_PREV ,     RM_NEXT ,  RM_VALD ,  RM_VALU ,     RM_SPDD ,    RM_SPDU  ,
-                                      _______ ,  _______   ,  _______ ,_______ ,_______ ,     XXXXXXX , XXXXXXX  ,   XXXXXXX   ,   XXXXXXX   , _______,
-
-     XXXXXXX , XXXXXXX,     XXXXXXX,   XXXXXXX,     XXXXXXX,                                                                          XXXXXXX,  XXXXXXX ,  XXXXXXX ,     XXXXXXX , XXXXXXX
+     KC_PAUSE, KC_PSCR ,   KC_SCRL ,   KC_INS , KC_NUM_LOCK,  RM_TOGG ,XXXXXXX ,XXXXXXX ,     _______ , XXXXXXX  ,     RM_PREV ,     RM_NEXT ,  RM_VALD ,  RM_VALU ,     RM_SPDD ,    RM_SPDU  ,
+                                      _______ ,  _______   ,  _______ ,_______ ,_______ ,     XXXXXXX , XXXXXXX  ,   XXXXXXX   ,   XXXXXXX   ,   XXXXXXX
     ),
 
 /*
@@ -116,16 +108,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+-------------.  .-------------+------+------+------+------+------+--------|
  * |   PTG  | xxxx | xxxx | xxxx | xxxx | xxxx | xxxx | xxxx |  |Clic 1|Clic 2| xxxx | xxxx | xxxx | xxxx | xxxx |  xxxx  |
  * .----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------.
- *                        | xxxx | xxxx | xxxx | xxxx | xxxx |  |Clic 3| xxxx | xxxx | xxxx | xxxx |
+ *                        | xxxx | xxxx | xxxx | CPIL | xxxx |  |Clic 3| xxxx | xxxx | xxxx | xxxx |
  *                        .----------------------------------.  .----------------------------------.
  */
-    [_PTG] = LAYOUT_split_3x6_5_hlc(
+    [_PTG] = LAYOUT_split_3x6_5(
      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
      XXXXXXX, XXXXXXX, MS_BTN2, MS_BTN3, MS_BTN1, XXXXXXX,                                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
     TG(_PTG), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      MS_BTN1 ,MS_BTN2 ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
-                                XXXXXXX, XXXXXXX, XXXXXXX, CPI_LOW, XXXXXXX,      MS_BTN3 ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
-
-     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                            XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX
+                                XXXXXXX, XXXXXXX, XXXXXXX, CPI_LOW, XXXXXXX,      MS_BTN3 ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX
     ),
 
 };
@@ -142,13 +132,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * .----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------.
  *                        | xxxx | xxxx | xxxx | xxxx | xxxx |  | xxxx | xxxx | xxxx | xxxx | xxxx |
  *                        .----------------------------------.  .----------------------------------.
-    [_PTG] = LAYOUT_split_3x6_5_hlc(
+    [_PTG] = LAYOUT_split_3x6_5(
      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
-                                XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
-
-     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                            XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX
+                                XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX
     ),
 
 };

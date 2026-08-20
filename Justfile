@@ -1,9 +1,9 @@
 BUILD_DIR := "./build"
 CONTAINER_RUNTIME := shell('command -v podman >/dev/null 2>&1 && echo "podman" || echo "docker"')
 CONTAINER_IMAGE := "local/qmk_cli"
-CONTAINER_VOLUME := " -v ./build:/qmk_firmware/.build \
-	-v ./kyria:/qmk_firmware/keyboards/splitkb/halcyon/kyria/keymaps/ureakim \
-	-v ./users/halcyon/users/halcyon_modules:/qmk_firmware/users/halcyon_modules "
+CONTAINER_VOLUME := " -v ./build:/qmk_firmware/.build:z \
+	-v ./kyria:/qmk_firmware/keyboards/splitkb/halcyon/kyria/keymaps/ureakim:z \
+	-v ./users/halcyon/users/halcyon_modules:/qmk_firmware/users/halcyon_modules:z "
 CONTAINER_CMD := CONTAINER_RUNTIME + " run --rm -it " + CONTAINER_VOLUME + CONTAINER_IMAGE
 
 prepare: image submodules
@@ -12,7 +12,7 @@ submodules:
 	git submodule update --init --recursive --remote
 
 image:
-	{{CONTAINER_RUNTIME}} rmi {{CONTAINER_IMAGE}}
+	{{CONTAINER_RUNTIME}} rmi -f {{CONTAINER_IMAGE}}
 	{{CONTAINER_RUNTIME}} build -t {{CONTAINER_IMAGE}} .
 
 run: mkdir_build
