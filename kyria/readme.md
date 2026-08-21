@@ -24,8 +24,6 @@ The thumb keys are deliberately assigned to functions that are useful while typi
 * **Backspace / Delete** — editing.
 * **Shift / Ctrl / Alt / GUI** — modifiers positioned close to the thumbs.
 
-The left outer thumb key also provides access to the control layer through the `Ctrl` key position.
-
 ### 1. BASE — typing
 
 The base layer contains the standard QWERTY alphabet.
