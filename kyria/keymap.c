@@ -12,6 +12,11 @@ enum custom_keycodes {
     CPI_LOW = SAFE_RANGE,
 };
 
+enum {
+    TD_RALT_OSL,
+};
+
+
 // Global variable
 #define CURSOR_CPI_BASE 400
 #define CURSOR_CPI_LOW  200
@@ -22,10 +27,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Base Layer
  */
     [_BASE] = LAYOUT_split_3x6_5(
-     KC_TAB  , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   ,                                            KC_Y ,   KC_U ,   KC_I ,   KC_O ,   KC_P , KC_BSLS,
-     KC_ESC  , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   ,                                            KC_H ,   KC_J ,   KC_K ,   KC_L ,KC_SCLN , KC_QUOT,
- LSFT(KC_GRV), KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , TT(_NUM), KC_BSPC,     KC_DEL  , MO(_SYM),  KC_N ,   KC_M , KC_COMM, KC_DOT ,KC_SLSH , KC_GRV ,
-                                 KC_LGUI, KC_LALT, KC_LSFT,  KC_SPC , KC_LCTL,     KC_RCTL ,KC_ENTER ,KC_RSFT, KC_RALT, KC_RGUI
+     KC_TAB  , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   ,                                            KC_Y ,           KC_U ,   KC_I ,   KC_O ,   KC_P , KC_BSLS,
+     KC_ESC  , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   ,                                            KC_H ,           KC_J ,   KC_K ,   KC_L ,KC_SCLN , KC_QUOT,
+ LSFT(KC_GRV), KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , TT(_NUM), KC_BSPC,     KC_DEL  , MO(_SYM),  KC_N ,          KC_M , KC_COMM, KC_DOT ,KC_SLSH , KC_GRV ,
+                                 KC_LGUI, KC_LALT, KC_LSFT,  KC_SPC , KC_LCTL,     KC_RCTL ,KC_ENTER ,KC_RSFT,TD(TD_RALT_OSL), KC_RGUI
     ),
 
 /*
@@ -119,3 +124,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
+
+void ralt_finished(tap_dance_state_t *state, void *user_data) {
+    if (state->count == 2) {
+        // Double tap: one-shot Right Alt
+        add_oneshot_mods(MOD_BIT(KC_RALT));
+    } else if (state->pressed) {
+        // Hold: normal Right Alt
+        register_code(KC_RALT);
+    } else {
+        // Single tap: normal Right Alt
+        tap_code(KC_RALT);
+    }
+}
+
+void ralt_reset(tap_dance_state_t *state, void *user_data) {
+    // Release Right Alt if it was held
+    unregister_code(KC_RALT);
+}
+
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_RALT_OSL] = ACTION_TAP_DANCE_FN_ADVANCED(
+        NULL,
+        ralt_finished,
+        ralt_reset
+    ),
+};
