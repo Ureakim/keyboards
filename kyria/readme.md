@@ -124,19 +124,12 @@ The layer is also configured as the QMK **auto-mouse layer**, so pointing-device
 
 ## Rotary encoders
 
-The two rotary encoders are configured consistently on the Base, Num, Sym, and Pointing layers:
+The two rotary encoders are configured consistently:
 
 | Encoder | Counter-clockwise | Clockwise      |
 | ------- | ----------------- | -------------- |
 | First   | Volume down       | Volume up      |
 | Second  | Mouse wheel down  | Mouse wheel up |
-
-On the Control layer the encoders instead control RGB:
-
-| Encoder | Counter-clockwise        | Clockwise              |
-| ------- | ------------------------ | ---------------------- |
-| First   | RGB animation speed down | RGB animation speed up |
-| Second  | RGB brightness down      | RGB brightness up      |
 
 ## Layer philosophy
 
