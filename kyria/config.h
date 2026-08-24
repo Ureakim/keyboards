@@ -10,7 +10,8 @@
 // Pointing devive
 //
 #define MK_3_SPEED            // Use constant speed mode for mouse keys
-#undef POINTING_DEVICE_GESTURES_CURSOR_GLIDE_ENABLE // Disable gliding
+#undef MOUSEKEY_INERTIA
+#define MOUSEKEY_TIME_TO_MAX 0
 #define SPLIT_POINTING_ENABLE // Transmit pointing info if pointing device is in the slave side
 #define POINTING_DEVICE_RIGHT // Pointing device on the right side
 #define POINTING_DEVICE_AUTO_MOUSE_ENABLE // Autoswitch to a layer when using pointing device
